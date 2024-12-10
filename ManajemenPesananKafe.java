@@ -111,43 +111,36 @@ public class ManajemenPesananKafe {
     }
 
     static void tampilkanPesanan() {
-        String pelangganTerakhir = "", mejaTerakhir = "";
 
         System.out.println("\n==================================");
         System.out.println("          DAFTAR PESANAN          ");
         System.out.println("==================================");
 
-        if (jumlahPesanan == 0) {
-            System.out.println("Belum ada pesanan yang dicatat.");
-        }
-
         for (int i = 0; i < jumlahPesanan; i++) {
-            String namaPelanggan = daftarPesanan[i][0];
-            String nomorMeja = daftarPesanan[i][1];
-    
-            if (!namaPelanggan.equals(pelangganTerakhir) || !nomorMeja.equals(mejaTerakhir)) {
-                pelangganTerakhir = namaPelanggan;
-                mejaTerakhir = nomorMeja;
-    
-                int totalHargaPesanan = 0;
-    
-                System.out.println("Nama Pelanggan: " + namaPelanggan);
-                System.out.println("Nomor Meja: " + nomorMeja);
+            boolean sudahDitampilkan = false;
+
+            for (int j = 0; j < i; j++) {
+                if (daftarPesanan[i][0].equals(daftarPesanan[j][0]) && daftarPesanan[i][1].equals(daftarPesanan[j][1])) {
+                    sudahDitampilkan = true;
+                    break;
+                }
+            }
+
+            if (!sudahDitampilkan) {
+                System.out.println("Nama Pelanggan: " + daftarPesanan[i][0]);
+                System.out.println("Nomor Meja: " + daftarPesanan[i][1]);
                 System.out.println("Detail Pesanan:");
-    
-                for (int j = 0; j < jumlahPesanan; j++) {
-                    if (daftarPesanan[j][0].equals(namaPelanggan) && daftarPesanan[j][1].equals(nomorMeja)) {
-                        String namaMenu = daftarPesanan[j][2];
-                        int jumlahItem = Integer.parseInt(daftarPesanan[j][3]);
-                        int hargaTotal = Integer.parseInt(daftarPesanan[j][4]);
-    
-                        System.out.println("- " + namaMenu + " x " + jumlahItem + " = Rp. " + hargaTotal);
-                        totalHargaPesanan += hargaTotal;
+
+                int totalHargaPelanggan = 0;
+                for (int j = i; j < jumlahPesanan; j++) {
+                    if (daftarPesanan[i][0].equals(daftarPesanan[j][0]) && daftarPesanan[i][1].equals(daftarPesanan[j][1])) {
+                        System.out.println("- " + daftarPesanan[j][2] + " x " + daftarPesanan[j][3] + " = Rp " + daftarPesanan[j][4]);
+                        totalHargaPelanggan += Integer.parseInt(daftarPesanan[j][4]);
                     }
                 }
-    
-                System.out.println("Total Harga Pesanan: Rp. " + totalHargaPesanan);
-                System.out.println("----------------------------------");
+
+                System.out.println("\nTotal Harga Pesanan: Rp " + totalHargaPelanggan);
+                System.out.println("-----------------------------------");
             }
         }
     }
