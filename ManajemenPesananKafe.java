@@ -17,19 +17,27 @@ public class ManajemenPesananKafe {
             System.out.println("1. Tambahkan Pesanan");
             System.out.println("2. Tampilkan Daftar Pesanan");
             System.out.println("3. Keluar");
-            System.out.print("\nPilih menu: ");
-            int pilihan = sc.nextInt();
-            sc.nextLine();
 
-            if (pilihan == 1) {
+            String pilihan;
+
+            while (true) {
+                System.out.print("\nPilih menu: ");
+                pilihan = sc.nextLine();
+
+                if (pilihan.equals("1") || pilihan.equals("2") || pilihan.equals("3")) {
+                    break;
+                } else {
+                    System.out.println("Pilihan menu tidak valid. Coba lagi!");
+                }
+            }
+
+            if (pilihan.equals("1")) {
                 tambahPesanan();
-            } else if (pilihan == 2) {
+            } else if (pilihan.equals("2")) {
                 tampilkanPesanan();
-            } else if (pilihan == 3) {
+            } else if (pilihan.equals("3")) {
                 System.out.println("\nTerima kasih telah menggunakan sistem manajemen pesanan!");
                 break;
-            } else {
-                System.out.println("Pilihan tidak valid. Coba lagi.");
             }
         }
     }
@@ -48,6 +56,11 @@ public class ManajemenPesananKafe {
             System.out.print("Masukkan Nomor Meja: ");
             nomorMeja = sc.nextInt();
 
+            if (nomorMeja < 1) {
+                System.out.println("Nomor Meja harus lebih dari 0.");
+                continue;
+            }
+
             String nmrMeja = Integer.toString(nomorMeja);
             boolean sudahTerisi = false;
 
@@ -64,13 +77,8 @@ public class ManajemenPesananKafe {
             }
         }
 
-        System.out.println("\n===============================");
-        System.out.println("          DAFTAR MENU          ");
-        System.out.println("===============================");
+        tampilkanMenu();
 
-        for (int i = 0; i < daftarMenu.length; i++) {
-            System.out.println((i + 1) + ". " + daftarMenu[i] + " - Rp. " + hargaMenu[i]);
-        }
         while (true) {
             System.out.print("\nPilih menu (masukkan nomor menu, atau 0 untuk selesai): ");
             int pilihanMenu = sc.nextInt();
@@ -83,6 +91,7 @@ public class ManajemenPesananKafe {
                 System.out.println("Pilihan menu tidak valid. Coba lagi.");
                 continue;
             }
+            
 
             String namaMenu = daftarMenu[pilihanMenu - 1];
             int hargaSatuan = hargaMenu[pilihanMenu - 1];
@@ -116,6 +125,11 @@ public class ManajemenPesananKafe {
         System.out.println("          DAFTAR PESANAN          ");
         System.out.println("==================================");
 
+        if (jumlahPesanan == 0) {
+            System.out.println("Belum ada pesanan yang tercatat.");
+            return;
+        }
+
         for (int i = 0; i < jumlahPesanan; i++) {
             boolean sudahDitampilkan = false;
 
@@ -143,6 +157,17 @@ public class ManajemenPesananKafe {
                 System.out.println("-----------------------------------");
             }
         }
+    }
+
+    static void tampilkanMenu() {
+        System.out.println("\n==================================");
+        System.out.println("             MENU CAFE            ");
+        System.out.println("==================================");
+
+        for (int i = 0; i < daftarMenu.length; i++) {
+            System.out.println((i + 1) + ". " + daftarMenu[i] + " - Rp. " + hargaMenu[i]);
+        }
+        System.out.println("===================================");
     }
     
 }
